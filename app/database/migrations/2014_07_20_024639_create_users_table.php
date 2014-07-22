@@ -19,11 +19,12 @@ class CreateUsersTable extends Migration {
 			$table->string('first_name');
 			$table->string('last_name');
 			$table->string('email')->unique();
+			$table->string('facebook_id');
 			$table->string('password');
 			$table->enum('group', array('A', 'U'));
+			$table->rememberToken();
 			$table->boolean('is_active');
 			$table->timestamps();
-			$table->rememberToken();
 		});
 	}
 

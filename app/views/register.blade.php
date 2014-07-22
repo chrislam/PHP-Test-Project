@@ -1,11 +1,7 @@
 @extends('layout')
 
-@section('sub-heading')
-  Logged in as: <?php echo $first_name ?> <?php echo $last_name ?>
-@stop
-
 @section('content')
-  {{ Form::open(array('action' => 'UserController@doCreate' )) }}
+  {{ Form::open(array('action' => 'RegistrationController@doRegister' )) }}
   <div>
     <?php
       echo Form::label('first_name', 'First Name');
@@ -56,10 +52,10 @@
     ?>
   </div>
   <div>
-    <?php echo Form::submit('Create'); ?>
+    <?php echo Form::submit('Register'); ?>
   </div>
   <div>
-    <?php echo link_to_action('UserController@showList', 'View All Users', $parameters = array(), $attributes = array()); ?>
+    <?php echo link_to_action('LoginController@showLogin', 'Login', $parameters = array(), $attributes = array()); ?>
   </div>
   {{ Form::close() }}
 @stop
