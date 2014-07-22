@@ -16,6 +16,7 @@
   </div>
   <div>
     <?php echo Form::submit('Login'); ?>
+    <?php echo link_to_action('RegistrationController@showRegister', 'Register', $parameters = array(), $attributes = array()); ?>
   </div>
   {{ Form::close() }}
 @stop

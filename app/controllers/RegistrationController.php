@@ -53,6 +53,12 @@ class RegistrationController extends BaseController {
 
     $user->save();
 
+    Mail::send('emails.welcome', array('user' => $user), function($message) use ($user)
+    {
+      $message->to($user->email)->cc('chris@lam.co.nz');
+      $message->subject('Welcome!');
+    });
+
     if (Auth::attempt(array('email' => $email, 'password' => $password)))
     {
       return Redirect::action('UserController@showList');
