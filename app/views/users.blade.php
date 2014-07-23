@@ -29,7 +29,7 @@
         <td>{{ $user->last_name }}</td>
         <td>{{ $user->email }}</td>
         <td>{{ $user->is_active }}</td>
-        <td>FACEBOOK ID</td>
+        <td>{{ $user->facebook_id }}</td>
         <td>{{ $user->created_at }}</td>
         @if (Auth::user()->group == 'A')
           <td>

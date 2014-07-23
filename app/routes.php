@@ -17,6 +17,8 @@ Route::get('login', array('before' => 'guest', 'uses' => 'LoginController@showLo
 
 Route::post('login', array('before' => 'guest|csrf', 'uses' => 'LoginController@doLogin'));
 
+Route::any('fb-login', array('uses' => 'LoginController@doFacebookLogin'));
+
 Route::get('logout', array('before' => 'auth', 'uses' => 'LoginController@doLogout'));
 
 Route::get('register', array('before' => 'guest', 'uses' => 'RegistrationController@showRegister'));

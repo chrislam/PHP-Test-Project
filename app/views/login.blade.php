@@ -18,6 +18,7 @@
   <div class="form-group">
     <div class="col-sm-10 col-sm-offset-2">
       {{ Form::submit('Login', $attributes = array('class' => 'btn btn-primary')); }}
+      {{ link_to($loginUrl, 'Login with Facebook', $attributes = array('class' => 'btn btn-default'), $secure = null) }}
       {{ link_to_action('RegistrationController@showRegister', 'Register', $parameters = array(), $attributes = array('class' => 'btn btn-default')); }}
     </div>
   </div>
