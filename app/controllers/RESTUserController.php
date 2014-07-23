@@ -11,7 +11,9 @@ class RESTUserController extends BaseController {
 
     if (Auth::validate(array('email' => $email, 'password' => $password)))
     {
-      $RESTAPIToken = Crypt::encrypt($email . ',' . date_format(date_create(), 'YmdHis'));
+      $expiry_date = date_create();
+      date_add($expiry_date, date_interval_create_from_date_string('+24 hour'));
+      $RESTAPIToken = Crypt::encrypt($email . ',' . date_format($expiry_date, 'Y-m-d H:i:s'));
       $success = true;
       $message = 'Your token will expire in 24 hours. Please authenticate again after that.';
     }
@@ -25,18 +27,27 @@ class RESTUserController extends BaseController {
 
   public function getUsers($token)
   {
-    // $combined = Crypt::decrypt($token);
+    $token_pieces = explode(',', Crypt::decrypt($token));
 
-    $users = User::all(
-      array(
-        'first_name',
-        'last_name',
-        'email',
-        'group',
-        'is_active'
-      )
-    );
+    $expiry_date = date_create($token_pieces[1]);
 
-    return Response::json($users);
+    $now = date_create();
+
+    if ($expiry_date > $now)
+    {
+      $users = User::all(
+        array(
+          'first_name',
+          'last_name',
+          'email',
+          'group',
+          'is_active'
+        )
+      );
+
+      return Response::json($users);
+    }
+    
+    return Response::json('Token expired');
   }
 }
