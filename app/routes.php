@@ -36,3 +36,5 @@ Route::post('user/edit/{id}', array('before' => 'auth|admin|csrf', 'uses' => 'Us
 Route::get('user/delete/{id}', array('before' => 'auth|admin', 'uses' => 'UserController@showDelete'));
 
 Route::post('user/delete/{id}', array('before' => 'auth|admin|csrf', 'uses' => 'UserController@doDelete'));
+
+Route::controller('api', 'RESTUserController');
