@@ -1,24 +1,29 @@
 @extends('layout')
 
-@section('sub-heading')
-  Logged in as: <?php echo $first_name ?> <?php echo $last_name ?>
-@stop
-
 @section('content')
-  @if (Auth::user()->group == 'A')
-    <?php echo link_to_action('UserController@showCreate', 'Create New User', $parameters = array(), $attributes = array()); ?>
-  @endif
-  <table>
+  <h2>User List</h2>
+  <div class="row">
+    <div class="col-sm-2">
+      @if (Auth::user()->group == 'A')
+        {{ link_to_action('UserController@showCreate', 'Create New User', $parameters = array(), $attributes = array('class' => 'btn btn-primary')); }}
+      @endif
+    </div>
+    <div class="col-sm-10 text-right">
+      <span>Logged in as: {{ $first_name }} {{ $last_name }}</span>
+      {{ link_to_action('LoginController@doLogout', 'Logout', $parameters = array(), $attributes = array('class' => 'btn btn-default')); }}
+    </div>
+  </div>
+  <table class="table table-striped table-hover table-condensed">
     <thead>
       <tr>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Email</td>
-        <td>Active</td>
-        <td>Facebook ID</td>
-        <td>Created</td>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th class="text-right">Active</th>
+        <th>Facebook ID</th>
+        <th>Created</th>
         @if (Auth::user()->group == 'A')
-          <td>Actions</td>
+          <th>Actions</th>
         @endif
       </tr>
     </thead>
@@ -28,18 +33,17 @@
         <td>{{ $user->first_name }}</td>
         <td>{{ $user->last_name }}</td>
         <td>{{ $user->email }}</td>
-        <td>{{ $user->is_active }}</td>
+        <td class="text-right">{{ $user->is_active }}</td>
         <td>{{ $user->facebook_id }}</td>
         <td>{{ $user->created_at }}</td>
         @if (Auth::user()->group == 'A')
           <td>
-            <?php echo link_to_action('UserController@showEdit', 'Edit', $parameters = array('id' => $user->id), $attributes = array()); ?>
-            <?php echo link_to_action('UserController@showDelete', 'Delete', $parameters = array('id' => $user->id), $attributes = array()); ?>
+            {{ link_to_action('UserController@showEdit', 'Edit', $parameters = array('id' => $user->id), $attributes = array('class' => 'btn btn-sm btn-default')); }}
+            {{ link_to_action('UserController@showDelete', 'Delete', $parameters = array('id' => $user->id), $attributes = array('class' => 'btn btn-sm btn-danger')); }}
           </td>
         @endif
       </tr>
     @endforeach
     </tbody>
   </table>
-  <?php echo link_to_action('LoginController@doLogout', 'Logout', $parameters = array(), $attributes = array()); ?>
 @stop
